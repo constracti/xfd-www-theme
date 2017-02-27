@@ -13,6 +13,30 @@ function xfd_settings_page() {
 	<table class="form-table">
 		<tbody>
 			<tr>
+				<th scope="row">
+					<label for="xfd_default_author"><?= __( 'Default author', 'xfd' ) ?></label>
+				</th>
+				<td colspan="2">
+<?php
+	$users = get_users( [
+		'role' => 'administrator',
+		'orderby' => 'login',
+		'order' => 'ASC',
+	] );
+	echo '<select name="default_author" id="xfd_default_author" class="xfd_option">' . "\n";
+	echo sprintf( '<option value="">%s</option>', __( 'none', 'm', 'xfd' ) ) . "\n";
+	foreach ( $users as $user ) {
+		$selected = selected( $user->ID, get_option( 'xfd_default_author' ), FALSE );
+		echo sprintf( '<option value="%d"%s>%s (%s)</option>', $user->ID, $selected, $user->user_login, $user->display_name ) . "\n";
+	}
+	echo '</select>' . "\n";
+	xfd_input_nonce( xfd_option_nonce( 'default_author' ) );
+	xfd_spinner();
+	xfd_description( 'description' ); // TODO description
+?>
+				</td>
+			</tr>
+			<tr>
 				<th scope="row"><?= __( 'Students tags', 'xfd' ) ?></th>
 <?php
 	xfd_settings_students_tags_td( 'students_male_tag', __( 'male students', 'xfd' ) );

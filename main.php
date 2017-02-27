@@ -3,7 +3,8 @@
 if ( !defined( 'ABSPATH' ) )
 	exit;
 
-// TODO set_option generic script and ajax call; main .php and .js
+// TODO clear options and meta values
+// TODO author colors!
 
 // initialize tabs
 $xfd_tabs = [
@@ -169,3 +170,29 @@ require_once( get_stylesheet_directory() . '/settings.php' );
 require_once( get_stylesheet_directory() . '/users.php' );
 
 require_once( get_stylesheet_directory() . '/metabox.php' );
+
+function xfd_author( $post ): string {
+	$display_name = get_userdata( get_option( 'xfd_default_author' ) )->display_name;
+	$author_id = $post->post_author;
+	$city_id = get_user_meta( $author_id, 'xfd_city', TRUE );
+	if ( $city_id === '' )
+		return sprintf( '<span class="xfd_author">%s</span>', $display_name );
+	$city = get_post( $city_id )->post_title;
+	$male_id = get_option( 'xfd_students_male_tag' );
+	$male = get_tag( $male_id )->name;
+	$female_id = get_option( 'xfd_students_female_tag' );
+	$female = get_tag( $female_id )->name;
+	if ( has_tag( $male_id, $post ) ) {
+		if ( has_tag( $female_id, $post ) ) {
+			return sprintf( '<span class="xfd_author_ab">%s & %s - %s</span>', $male, $female, $city );
+		} else {
+			return sprintf( '<span class="xfd_author_a">%s - %s</span>', $male, $city );
+		}
+	} else {
+		if ( has_tag( $female_id, $post ) ) {
+			return sprintf( '<span class="xfd_author_b">%s - %s</span>', $female, $city );
+		} else {
+			return sprintf( '<span class="xfd_author_o">%s</span>', $city );
+		}
+	}
+}

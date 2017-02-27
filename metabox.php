@@ -5,10 +5,7 @@ if ( !defined( 'ABSPATH' ) )
 
 add_action( 'add_meta_boxes_post', function() {
 	// TODO permissions
-	// TODO post saved values
 	// TODO hide metaboxes
-	// TODO script init and change
-	// TODO radio buttons remove name property
 	if ( !current_user_can( 'administrator' ) )
 		return;
 	$user_id = get_current_user_id();
@@ -17,14 +14,13 @@ add_action( 'add_meta_boxes_post', function() {
 	add_meta_box( 'xfddiv', __( 'XFD', 'xfd' ), function( $post ) {
 		$user_id = get_current_user_id();
 		$city = get_post( get_user_meta( $user_id, 'xfd_city', TRUE ) );
+		echo sprintf( '<input type="hidden" id="xfd_screen_action" value="%s" />', get_current_screen()->action ) . "\n";
 		echo sprintf( '<p><strong>%s</strong></p>', $city->post_title ) . "\n";
 		xfd_metabox_category_p( $city->ID, 'notices' );
 		xfd_metabox_category_p( $city->ID, 'reports' );
 		echo '<hr />' . "\n";
 		xfd_metabox_students_p( $user_id, 'male' );
 		xfd_metabox_students_p( $user_id, 'female' );
-		echo '<hr />' . "\n";
-		echo '<p><small>under development</small></p>' . "\n";
 	}, 'post', 'side' );
 } );
 
@@ -38,8 +34,7 @@ function xfd_metabox_category_p( int $post_id, string $key ) {
 	$cat = get_tag( $cat_id );
 	echo '<p>' . "\n";
 	echo '<label>' . "\n";
-	$checked = checked( $key, 'notices', FALSE );
-	echo sprintf( '<input type="radio" name="xfd_category_radio" value="%d"%s />', $cat->term_id, $checked ) . "\n";
+	echo sprintf( '<input type="radio" class="xfd_category_radio" value="%d" />', $cat->term_id ) . "\n";
 	echo sprintf( '<span>%s</span>', $tag->name ) . "\n";
 	echo '</label>' . "\n";
 	echo '</p>' . "\n";
@@ -51,10 +46,12 @@ function xfd_metabox_students_p( int $user_id, string $key ) {
 	$tag = get_tag( $tag_id );
 	$user_meta_key = sprintf( 'xfd_%s', $key );
 	$user_meta = get_user_meta( $user_id, $user_meta_key, TRUE );
-	$checked = checked( $user_meta, 'on', FALSE );
+	$class = ['xfd_tag_checkbox'];
+	if ( $user_meta === 'on' )
+		$class[] = 'xfd_tag_checkbox_default';
 	echo '<p>' . "\n";
 	echo '<label>' . "\n";
-	echo sprintf( '<input type="checkbox" name="xfd_students_checkbox" value="%d"%s />', $tag->term_id, $checked ) . "\n";
+	echo sprintf( '<input type="checkbox" class="%s" value="%s" />', implode( ' ', $class ), $tag->name ) . "\n";
 	echo sprintf( '<span>%s</span>', $tag->name ) . "\n";
 	echo '</label>' . "\n";
 	echo '</p>' . "\n";
