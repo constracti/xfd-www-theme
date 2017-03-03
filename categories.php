@@ -3,8 +3,6 @@
 if ( !defined( 'ABSPATH' ) )
 	exit;
 
-// TODO clear meta
-
 function xfd_categories_page() {
 	if ( !current_user_can( 'administrator' ) )
 		return;
@@ -67,7 +65,7 @@ function xfd_categories_page() {
 function xfd_city_category_td( int $id, string $key, array $cats, string $description ) {
 	echo '<td>' . "\n";
 	echo sprintf( '<select class="xfd_post_meta" name="%s">', $key ) . "\n";
-	echo sprintf( '<option value="">%s</option>', __( 'none', 'f', 'xfd' ) ) . "\n";
+	echo sprintf( '<option value="">%s</option>', _x( 'none', 'f', 'xfd' ) ) . "\n";
 	$meta = intval( get_post_meta( $id, 'xfd_' . $key, TRUE ) );
 	foreach ( $cats as $cat )
 		echo sprintf( '<option value="%d"%s>%s</option>', $cat->term_id, selected( $meta, $cat->term_id, FALSE ), $cat->name ) . "\n";

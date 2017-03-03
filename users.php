@@ -3,8 +3,6 @@
 if ( !defined( 'ABSPATH' ) )
 	exit;
 
-// TODO clear meta
-
 function xfd_users_page() {
 	if ( !current_user_can( 'administrator' ) )
 		return;
@@ -33,7 +31,7 @@ function xfd_users_page() {
 			echo sprintf( '<th scope="row">%s</th>', $user->user_login ) . "\n";
 			echo '<td>' . "\n";
 			echo '<select class="xfd_user_meta" name="city">' . "\n";
-			echo sprintf( '<option value="">%s</option>', __( 'none', 'f', 'xfd' ) ) . "\n";
+			echo sprintf( '<option value="">%s</option>', _x( 'none', 'f', 'xfd' ) ) . "\n";
 			$meta = intval( get_user_meta( $user->ID, 'xfd_city', TRUE ) );
 			foreach ( $cities_posts as $city )
 				echo sprintf( '<option value="%d"%s>%s</option>', $city->ID, selected( $meta, $city->ID, FALSE ), $city->post_title ) . "\n";

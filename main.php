@@ -6,11 +6,12 @@ if ( !defined( 'ABSPATH' ) )
 // TODO clear options and meta values
 // TODO author colors!
 
-// initialize tabs
+/* initialize tabs */
 $xfd_tabs = [
 	'xfd-settings' => __( 'Settings', 'xfd' ),
 	'xfd-categories' => __( 'Categories', 'xfd' ),
 	'xfd-users' => __( 'Users', 'xfd' ),
+	'xfd-tags' => __( 'Tags', 'xfd' ),
 ];
  
 function xfd_success( array $array = [] ) {
@@ -96,12 +97,19 @@ add_action( 'admin_menu', function() {
 	$menu_slug = 'xfd-users';
 	$function = 'xfd_users_page';
 	add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
+	// add submenu page 'Tags'
+	$parent_slug = 'xfd-settings';
+	$page_title = sprintf( '%s :: %s', __( 'XFD', 'xfd' ), $xfd_tabs['xfd-tags'] );
+	$menu_title = $xfd_tabs['xfd-tags'];
+	$menu_slug = 'xfd-tags';
+	$function = 'xfd_tags_page';
+	add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 } );
 
 add_action( 'admin_enqueue_scripts', function( $hook ) {
 	if ( !current_user_can( 'administrator' ) )
 		return;
-	if ( !in_array( $hook, ['toplevel_page_xfd-settings', 'xfd_page_xfd-categories', 'xfd_page_xfd-users'] ) )
+	if ( !in_array( $hook, ['toplevel_page_xfd-settings', 'xfd_page_xfd-categories', 'xfd_page_xfd-users', 'xfd_page_xfd-tags'] ) )
 		return;
 	wp_enqueue_script( 'xfd-main', get_stylesheet_directory_uri() . '/main.js', ['jquery'] );
 } );
@@ -167,32 +175,7 @@ add_action( 'wp_ajax_xfd_user_meta', function() {
 
 require_once( get_stylesheet_directory() . '/categories.php' );
 require_once( get_stylesheet_directory() . '/settings.php' );
+require_once( get_stylesheet_directory() . '/tags.php' );
 require_once( get_stylesheet_directory() . '/users.php' );
 
 require_once( get_stylesheet_directory() . '/metabox.php' );
-
-function xfd_author( $post ): string {
-	$display_name = get_userdata( get_option( 'xfd_default_author' ) )->display_name;
-	$author_id = $post->post_author;
-	$city_id = get_user_meta( $author_id, 'xfd_city', TRUE );
-	if ( $city_id === '' )
-		return sprintf( '<span class="xfd_author">%s</span>', $display_name );
-	$city = get_post( $city_id )->post_title;
-	$male_id = get_option( 'xfd_students_male_tag' );
-	$male = get_tag( $male_id )->name;
-	$female_id = get_option( 'xfd_students_female_tag' );
-	$female = get_tag( $female_id )->name;
-	if ( has_tag( $male_id, $post ) ) {
-		if ( has_tag( $female_id, $post ) ) {
-			return sprintf( '<span class="xfd_author_ab">%s & %s - %s</span>', $male, $female, $city );
-		} else {
-			return sprintf( '<span class="xfd_author_a">%s - %s</span>', $male, $city );
-		}
-	} else {
-		if ( has_tag( $female_id, $post ) ) {
-			return sprintf( '<span class="xfd_author_b">%s - %s</span>', $female, $city );
-		} else {
-			return sprintf( '<span class="xfd_author_o">%s</span>', $city );
-		}
-	}
-}
