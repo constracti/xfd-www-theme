@@ -179,3 +179,5 @@ require_once( get_stylesheet_directory() . '/tags.php' );
 require_once( get_stylesheet_directory() . '/users.php' );
 
 require_once( get_stylesheet_directory() . '/metabox.php' );
+
+require_once( get_stylesheet_directory() . '/hide.php' );

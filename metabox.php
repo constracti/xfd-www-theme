@@ -4,7 +4,6 @@ if ( !defined( 'ABSPATH' ) )
 	exit;
 
 add_action( 'add_meta_boxes_post', function() {
-	// TODO metabox order and visibility
 	if ( !current_user_can( 'edit_posts' ) )
 		return;
 	$user_id = get_current_user_id();
@@ -21,20 +20,21 @@ add_action( 'add_meta_boxes_post', function() {
 		xfd_metabox_students_div( $user_id, 'male' );
 		xfd_metabox_students_div( $user_id, 'female' );
 		echo '<hr />' . "\n";
-		echo '<div>' . "\n";
 		foreach ( ['photo', 'audio', 'video'] as $option ) {
 			$tag = get_option( sprintf( 'xfd_%s_tag', $option ) );
 			if ( $tag !== FALSE )
 				xfd_metabox_media_tag_div( $tag, $option );
 		}
-		echo '</div>' . "\n";
 		$tags = get_option( 'xfd_frequent_tags' );
 		if ( $tags === FALSE )
 			$tags = [];
 		else
 			$tags = explode( ';', $tags );
-		foreach ( $tags as $tag )
-			xfd_metabox_frequent_tag_div( $tag );
+		if ( !empty( $tags ) ) {
+			echo '<hr />' . "\n";
+			foreach ( $tags as $tag )
+				xfd_metabox_frequent_tag_div( $tag );
+		}
 	}, 'post', 'side' );
 } );
 

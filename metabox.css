@@ -1,16 +1,16 @@
 .xfd_metabox_city_name,
 .xfd_metabox_category_div {
-	margin: 2px 0px 3px 0px;
+	margin: 5px 0px;
 }
 
 .xfd_metabox_frequent_tag_div,
 .xfd_metabox_students_tag_div {
 	display: inline-block;
-	margin: 2px 10px 3px 0px;
+	margin: 5px 10px 5px 0px;
 }
 
 .xfd_metabox_media_tag_div {
 	display: inline-block;
 	width: 30%;
-	margin: 2px 0px 3px 0px;
+	margin: 5px 0px;
 }
