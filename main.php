@@ -22,7 +22,6 @@ function xfd_success( array $array = [] ) {
 function xfd_header() {
 	global $xfd_tabs;
 	$active = $_GET['page'];
-	$url = admin_url( 'admin.php' );
 	echo '<div class="wrap">' . "\n";
 	echo sprintf( '<h1>%s :: %s</h1>', __( 'XFD', 'xfd' ), $xfd_tabs[ $active ] ) . "\n";
 	echo '<h2 class="nav-tab-wrapper">' . "\n";
@@ -30,7 +29,8 @@ function xfd_header() {
 		$class = ['nav-tab'];
 		if ( $page === $active )
 			$class[] = 'nav-tab-active';
-		echo sprintf( '<a class="%s" href="%s?page=%s">%s</a>', implode( ' ', $class ), $url, $page, $title ) . "\n";
+		$url = menu_page_url( $page, FALSE );
+		echo sprintf( '<a class="%s" href="%s">%s</a>', implode( ' ', $class ), $url, $title ) . "\n";
 	}
 	echo '</h2>' . "\n";
 }
