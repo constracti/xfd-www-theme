@@ -1,0 +1,87 @@
+/*
+Theme Name:     Newspaper 7 Child theme
+Theme URI: 		http://themeforest.net/user/tagDiv/portfolio
+Description:    Child theme made by tagDiv
+Author:         tagDiv
+Author URI: 	http://themeforest.net/user/tagDiv/portfolio
+Template:       Newspaper                             
+Version:        7.2c
+*/
+
+
+/*  ----------------------------------------------------------------------------
+    This file will load automatically when the child theme is active. You can use it
+    for custom CSS.
+*/
+
+#mediaTitlos{
+color: #375977;
+}
+
+#mediaTitlos:hover{
+text-decoration:underline;
+}
+
+#mediaHr{
+background:#8c0101;
+height: 2px;
+margin:30px 0;
+border: #BE714E;
+}
+
+#mediaDate{
+display:block;
+color:#555555;
+font-size:15px;
+}
+
+a.page, a.first, a.last{
+padding:2px;
+}
+
+a.year-button{
+background: #378264;
+    color: #ffffff;
+    padding: 10px;
+    margin: 10px;
+}
+
+.video-wraper{
+	display:block;
+	width:48%;
+	float:left;
+	padding:10px;
+}
+
+header .td-module-meta-info {
+    margin-top: 22px;
+	margin-bottom:3px;
+}
+
+.widget_recent_comments li{
+	color: #9f7a2b;
+}
+
+.td-trending-now-wrapper:hover .td-trending-now-title{
+	background-color:#b53733!important;
+}
+
+.widget select{
+	color: #333333;
+}
+
+.td_block_text_with_title{
+	padding-bottom:0!important;
+}
+
+.td-boxed-layout #td-outer-wrap {
+    box-shadow: 1px 1px 8px #aaaaaa;
+}
+
+.td-header-style-9 .td-logo-wrap-full a{
+	max-width:700px;
+}
+
+.td-header-wrap{
+	margin-top:-1px;
+}
