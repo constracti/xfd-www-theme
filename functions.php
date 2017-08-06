@@ -195,22 +195,26 @@ add_action( 'wp_enqueue_scripts', function() {
 <style>
 .td_block_slide_custom_selectors {
 	margin-top: 2px;
-	text-align: center;
+	display: flex;
+	justify-content: space-between;
 }
-.td_block_slide_custom_selectors>* {
-	margin: 0 1px;
+.td_block_slide_custom_selectors>div>img {
 	border-style: solid;
 	border-width: 2px;
 	border-color: #888;
+	opacity: 0.6;
 }
-.td_block_slide_custom_selectors>*:hover {
-	border-color: #666;
+.td_block_slide_custom_selectors>div>img:hover {
+	border-color: #444;
+	opacity: 0.8;
 }
-.td_block_slide_custom_selectors>*.selected {
-	border-color: #222;
+.td_block_slide_custom_selectors>div.selected>img {
+	border-color: #444;
+	opacity: 0.8;
 }
-.td_block_slide_custom_selectors>*.selected:hover {
+.td_block_slide_custom_selectors>div.selected>img:hover {
 	border-color: #000;
+	opacity: 1.0;
 }
 </style>
 <?php

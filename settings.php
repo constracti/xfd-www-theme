@@ -32,6 +32,7 @@ function xfd_settings_page() {
 	echo '</td>' . "\n";
 	echo '</tr>' . "\n";
 	/* author postmeta */
+	/*
 	echo '<tr>' . "\n";
 	echo '<th scope="row">' . "\n";
 	echo sprintf( '<span>%s</span>', __( 'Author postmeta', 'xfd' ) ) . "\n";
@@ -50,6 +51,7 @@ function xfd_settings_page() {
 	xfd_description( __( 'clear all postmeta author entries', 'xfd' ) );
 	echo '</td>' . "\n";
 	echo '</tr>' . "\n";
+	*/
 	/* student tags */
 	echo '<tr>' . "\n";
 	echo sprintf( '<th scope="row">%s</th>', __( 'Students tags', 'xfd' ) ) . "\n";
@@ -226,7 +228,7 @@ function xfd_author( $post ): string {
 	return sprintf( '<span class="%s">%s</span>', implode( ' ', $class ), $html );
 }
 
-add_action( 'wp_ajax_xfd_author_postmeta_refresh', function() {
+FALSE && add_action( 'wp_ajax_xfd_author_postmeta_refresh', function() {
 	if ( !current_user_can( 'administrator' ) )
 		exit( 'role' );
 	$action = xfd_option_nonce( 'author_postmeta_refresh' );
@@ -242,7 +244,7 @@ add_action( 'wp_ajax_xfd_author_postmeta_refresh', function() {
 	xfd_success();
 } );
 
-add_action( 'wp_ajax_xfd_author_postmeta_clear', function() {
+FALSE && add_action( 'wp_ajax_xfd_author_postmeta_clear', function() {
 	if ( !current_user_can( 'administrator' ) )
 		exit( 'role' );
 	$action = xfd_option_nonce( 'author_postmeta_clear' );
@@ -262,6 +264,6 @@ add_action( 'wp_ajax_xfd_author_postmeta_clear', function() {
 	xfd_success();
 } );
 
-add_action( 'save_post_post', function( $post_id, $post, $update ) {
+FALSE && add_action( 'save_post_post', function( $post_id, $post, $update ) {
 	update_post_meta( $post->ID, 'xfd_author', xfd_author( $post ) );
 }, 10, 3 );

