@@ -41,15 +41,15 @@ add_action( 'add_meta_boxes_post', function() {
 
 function xfd_metabox_category_div( int $post_id, string $key ) {
 	$option_key = sprintf( 'xfd_%s_parent_category', $key );
-	$tag_id = get_option( $option_key );
-	$tag = get_tag( $tag_id );
+	$term_id = get_option( $option_key );
+	$term = get_term( $term_id );
 	$post_meta_key = sprintf( 'xfd_city_%s_category', $key );
 	$cat_id = get_post_meta( $post_id, $post_meta_key, TRUE );
-	$cat = get_tag( $cat_id );
+	$cat = get_category( $cat_id );
 	echo '<div class="xfd_metabox_category_div">' . "\n";
 	echo '<label>' . "\n";
 	echo sprintf( '<input type="radio" class="xfd_category_radio" value="%d" />', $cat->term_id ) . "\n";
-	echo sprintf( '<span>%s</span>', $tag->name ) . "\n";
+	echo sprintf( '<span>%s</span>', $term->name ) . "\n";
 	echo '</label>' . "\n";
 	echo '</div>' . "\n";
 }

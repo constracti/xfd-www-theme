@@ -16,7 +16,7 @@ function xfd_categories_page() {
 		$cities_posts = get_posts( [
 			'post_parent' => $cities_parent_page,
 			'post_type' => 'page',
-			'post_status' => 'public',
+			'post_status' => 'publish',
 			'nopaging' => TRUE,
 			'order' => 'ASC',
 			'orderby' => 'title',
