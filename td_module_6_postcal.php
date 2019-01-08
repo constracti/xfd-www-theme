@@ -58,4 +58,28 @@ class td_module_6_postcal extends td_module {
 
         return $buffy;
     }
+
+	function get_image( $thumbType, $css_image = FALSE ) {
+		$image = parent::get_image( $thumbType, $css_image );
+		if ( get_post_status( $this->post ) === 'publish' || current_user_can( 'read_post', $this->post->ID ) )
+			return $image;
+		$div = new HTML_Collection( $image );
+		$a = $div->children();
+		$img = $a->children();
+		$div->text( $img->serialize() );
+		$image = $div->serialize();
+		return $image;
+	}
+
+	function get_title( $cut_at = '' ) {
+		$title = parent::get_title( $cut_at );
+		if ( get_post_status( $this->post ) === 'publish' || current_user_can( 'read_post', $this->post->ID ) )
+			return $title;
+		$h3 = new HTML_Collection( $title );
+		$a = $h3->children();
+		$text = $a->children();
+		$h3->text( $text->serialize() );
+		$title = $h3->serialize();
+		return $title;
+	}
 }
