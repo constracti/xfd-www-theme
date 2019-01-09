@@ -86,10 +86,6 @@ function auto_featured_image() {
 
 /* constracti */
 
-require_once( XFD_DIR . '/includes/index.php' );
-require_once( XFD_DIR . '/includes/class-html-element.php' );
-require_once( XFD_DIR . '/includes/class-html-collection.php' );
-
 require_once( XFD_DIR . '/main.php' );
 
 @ini_set( 'upload_max_size' , '128M' );
