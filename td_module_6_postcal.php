@@ -63,11 +63,13 @@ class td_module_6_postcal extends td_module {
 		$image = parent::get_image( $thumbType, $css_image );
 		if ( get_post_status( $this->post ) === 'publish' || current_user_can( 'read_post', $this->post->ID ) )
 			return $image;
-		$div = new HTML_Collection( $image );
-		$a = $div->children();
-		$img = $a->children();
-		$div->text( $img->serialize() );
-		$image = $div->serialize();
+		$doc = new DOMDocument();
+		$doc->loadHTML( mb_convert_encoding( $image, 'HTML-ENTITIES', 'UTF-8') );
+		$div = $doc->getElementsByTagName( 'body' )->item( 0 )->firstChild;
+		$a = $div->lastChild;
+		$img = $a->firstChild;
+		$div->replaceChild( $img, $a );
+		$image = $doc->saveHTML( $div );
 		return $image;
 	}
 
@@ -75,11 +77,12 @@ class td_module_6_postcal extends td_module {
 		$title = parent::get_title( $cut_at );
 		if ( get_post_status( $this->post ) === 'publish' || current_user_can( 'read_post', $this->post->ID ) )
 			return $title;
-		$h3 = new HTML_Collection( $title );
-		$a = $h3->children();
-		$text = $a->children();
-		$h3->text( $text->serialize() );
-		$title = $h3->serialize();
+		$doc = new DOMDocument();
+		$doc->loadHTML( mb_convert_encoding( $title, 'HTML-ENTITIES', 'UTF-8') );
+		$h3 = $doc->getElementsByTagName( 'body' )->item( 0 )->firstChild;
+		$a = $h3->firstChild;
+		$h3->textContent = $a->textContent;
+		$title = $doc->saveHTML( $h3 );
 		return $title;
 	}
 }
